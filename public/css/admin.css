@@ -1,0 +1,221 @@
+/* ── Admin Layout ────────────────────────────────────────────── */
+.admin-body { background: #080810; min-height: 100vh; }
+
+.admin-screen { display: none; }
+.admin-screen.active { display: block; }
+
+/* ── Auth ────────────────────────────────────────────────────── */
+#admin-auth.active {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.auth-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 340px;
+}
+.auth-box h1 { color: var(--yellow); font-size: 1.4rem; letter-spacing: 2px; }
+.auth-box input { max-width: 300px; text-align: center; font-size: 1.1rem; }
+.auth-box .btn { max-width: 200px; width: 100%; margin-top: 0; }
+
+/* ── Header ──────────────────────────────────────────────────── */
+.admin-header {
+  background: var(--card);
+  border-bottom: 2px solid var(--yellow);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--yellow);
+}
+.admin-title .icon { font-size: 1.4rem; }
+
+.admin-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.timer {
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--yellow);
+  font-family: var(--mono);
+  min-width: 68px;
+  text-align: center;
+}
+
+.btn-green {
+  background: #27ae60;
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.btn-green:hover:not(:disabled) { background: #219a52; }
+.btn-green:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.btn-red {
+  background: var(--red);
+  color: #fff;
+  border: none;
+  padding: 9px 18px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.18s;
+}
+.btn-red:hover { background: #c0392b; }
+
+/* ── Grille équipes ──────────────────────────────────────────── */
+.teams-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 18px;
+  padding: 24px;
+}
+
+.team-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-top: 4px solid;
+  border-radius: 12px;
+  padding: 18px;
+  transition: box-shadow 0.2s;
+}
+.team-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+
+.team-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 8px;
+}
+.team-card-header h3 { font-size: 1rem; margin: 0; }
+
+.status-badge {
+  font-size: 0.75rem;
+  padding: 3px 9px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.08);
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.status-badge.done { background: rgba(46,204,113,0.18); color: var(--green); }
+
+.progress-bar {
+  height: 7px;
+  background: var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 14px;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.6s ease;
+  min-width: 2px;
+}
+
+.team-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 14px;
+  line-height: 1.5;
+}
+
+.team-actions { display: flex; gap: 8px; }
+
+.action-btn {
+  padding: 7px 12px;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+  transition: all 0.18s;
+}
+.hint-btn { background: rgba(245,197,24,0.15); color: var(--yellow); }
+.hint-btn:hover { background: rgba(245,197,24,0.28); }
+.advance-btn { background: rgba(52,152,219,0.15); color: var(--blue); }
+.advance-btn:hover:not(:disabled) { background: rgba(52,152,219,0.28); }
+.advance-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ── Classement ──────────────────────────────────────────────── */
+.ranking-section { padding: 0 24px 50px; }
+.ranking-section h2 { color: var(--yellow); font-size: 1.1rem; margin-bottom: 14px; letter-spacing: 1px; }
+
+.ranking-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 18px;
+  background: var(--card);
+  border-radius: 9px;
+  margin-bottom: 9px;
+  border: 1px solid var(--border);
+}
+.medal { font-size: 1.6rem; flex-shrink: 0; }
+.ranking-item strong { flex: 1; font-size: 0.95rem; }
+.elapsed { color: var(--muted); font-family: var(--mono); font-size: 0.9rem; }
+
+.muted { color: var(--muted); font-size: 0.9rem; }
+
+/* ── Modal ───────────────────────────────────────────────────── */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 24px;
+}
+.modal.hidden { display: none; }
+
+.modal-content {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 26px;
+  width: 100%;
+  max-width: 420px;
+}
+.modal-content h3 { color: var(--yellow); margin-bottom: 6px; font-size: 1.1rem; }
+.modal-content .muted { margin-bottom: 14px; }
+.modal-content textarea { resize: vertical; min-height: 90px; }
+
+.modal-actions { display: flex; gap: 10px; margin-top: 18px; }
+.modal-actions .btn { flex: 1; padding: 10px; }

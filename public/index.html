@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Escape Game — Agence Acapulco</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ── ÉCRAN : Connexion ─────────────────────────────────────── -->
+  <div id="screen-join" class="screen active">
+    <div class="logo">🔍</div>
+    <h1>AGENCE ACAPULCO</h1>
+    <p class="subtitle">Une affaire criminelle vous attend...</p>
+    <div class="card">
+      <label for="input-name">Votre prénom</label>
+      <input type="text" id="input-name" placeholder="Inspecteur..." maxlength="30" autocomplete="off">
+      <label>Choisissez votre brigade</label>
+      <div class="team-grid" id="team-grid"></div>
+      <button id="btn-join" class="btn btn-primary" disabled>Rejoindre la brigade</button>
+    </div>
+  </div>
+
+  <!-- ── ÉCRAN : Attente ───────────────────────────────────────── -->
+  <div id="screen-waiting" class="screen">
+    <div class="logo">⏳</div>
+    <h2 id="waiting-team-name">Brigade Alpha</h2>
+    <p class="subtitle">Briefing en cours...</p>
+    <div id="waiting-members" class="members-list"></div>
+    <p class="small">L'organisateur lancera le jeu pour tout le monde en même temps.</p>
+  </div>
+
+  <!-- ── ÉCRAN : Énigme ────────────────────────────────────────── -->
+  <div id="screen-enigma" class="screen enigma-screen">
+    <header class="game-header">
+      <div class="team-badge" id="header-team"></div>
+      <div class="progress-text" id="header-progress">Étape 1/6</div>
+    </header>
+    <div class="enigma-content" id="enigma-content"></div>
+  </div>
+
+  <!-- ── ÉCRAN : Bonne réponse ─────────────────────────────────── -->
+  <div id="screen-correct" class="screen">
+    <div class="logo">✅</div>
+    <h2>Bonne réponse !</h2>
+    <p class="subtitle">Chargement de la prochaine étape...</p>
+  </div>
+
+  <!-- ── ÉCRAN : Victoire ──────────────────────────────────────── -->
+  <div id="screen-won" class="screen">
+    <div class="logo">🏆</div>
+    <h1>ENQUÊTE RÉSOLUE !</h1>
+    <p id="won-position" class="subtitle"></p>
+    <p id="won-time" class="subtitle"></p>
+    <div class="won-details">
+      <p><strong>Coupable :</strong> Isabelle Renard</p>
+      <p><strong>Mobile :</strong> Primes impayées depuis 3 ans</p>
+      <p><strong>Cachette :</strong> Au pied de l'Arbre B, 7 pas vers le nord !</p>
+    </div>
+    <p class="small">🎁 Allez récupérer votre récompense dans le parc !</p>
+  </div>
+
+  <!-- ── OVERLAY : Indice ──────────────────────────────────────── -->
+  <div id="hint-overlay" class="hint-overlay hidden">
+    <div class="hint-card">
+      <div class="hint-header">📨 Indice de l'Inspecteur</div>
+      <p id="hint-message"></p>
+      <button class="btn btn-secondary" onclick="closeHint()">Fermer</button>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Escape Game Acapulco</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin-body">
+
+  <!-- ── AUTH ─────────────────────────────────────────────────── -->
+  <div id="admin-auth" class="admin-screen active">
+    <div class="auth-box">
+      <div class="logo">🔑</div>
+      <h1>Administration</h1>
+      <input type="password" id="admin-password" placeholder="Mot de passe admin" autocomplete="off">
+      <button onclick="adminLogin()" class="btn btn-primary">Connexion</button>
+      <p id="auth-error" class="error-msg" style="display:none"></p>
+    </div>
+  </div>
+
+  <!-- ── TABLEAU DE BORD ──────────────────────────────────────── -->
+  <div id="admin-main" class="admin-screen">
+    <header class="admin-header">
+      <div class="admin-title">
+        <span class="icon">🎮</span>
+        <span>Escape Game — Agence Acapulco</span>
+      </div>
+      <div class="admin-controls">
+        <span id="timer-display" class="timer">00:00</span>
+        <button id="btn-start" class="btn btn-green" onclick="startGame()">▶ Lancer le jeu</button>
+        <button class="btn btn-red" onclick="resetGame()">↺ Réinitialiser</button>
+      </div>
+    </header>
+
+    <div class="teams-grid" id="teams-grid"></div>
+
+    <div class="ranking-section">
+      <h2>Classement</h2>
+      <div id="ranking-list"><p class="muted">Aucune équipe n'a terminé pour l'instant.</p></div>
+    </div>
+  </div>
+
+  <!-- ── MODAL INDICE ──────────────────────────────────────────── -->
+  <div id="hint-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>💡 Envoyer un indice</h3>
+      <p id="hint-modal-team" class="muted"></p>
+      <textarea id="hint-text" placeholder="Rédigez votre indice ici..." rows="4"></textarea>
+      <div class="modal-actions">
+        <button class="btn btn-green" onclick="sendHint()">Envoyer</button>
+        <button class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>
