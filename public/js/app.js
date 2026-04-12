@@ -3,6 +3,7 @@ let myTeamId = null;
 let myTeamColor = '#f5c518';
 let selectedTeamId = null;
 let currentEnigma = null;
+let totalEnigmas = 8;
 
 // ── Écrans ────────────────────────────────────────────────────────────────────
 
@@ -66,7 +67,8 @@ socket.on('state-update', (state) => {
   }
 });
 
-socket.on('joined', ({ teamId, teamName, color }) => {
+socket.on('joined', ({ teamId, teamName, color, totalEnigmas: te }) => {
+  if (te) totalEnigmas = te;
   myTeamId = teamId;
   myTeamColor = color;
   document.getElementById('waiting-team-name').textContent = teamName;
@@ -126,7 +128,7 @@ function esc(str) {
 }
 
 function renderEnigma(enigma) {
-  document.getElementById('header-progress').textContent = `Étape ${enigma.number}/6`;
+  document.getElementById('header-progress').textContent = `Étape ${enigma.number}/${totalEnigmas}`;
   const content = document.getElementById('enigma-content');
   let html = `<h2>${esc(enigma.title)}</h2><p class="intro">${esc(enigma.intro)}</p>`;
 
@@ -139,7 +141,7 @@ function renderEnigma(enigma) {
       enigma.suspects.forEach(s => {
         html += `<div class="suspect-card">
           <strong>${esc(s.name)}</strong> — <em>${esc(s.role)}</em><br>
-          Badge : ${esc(s.badge)}<br>
+          ${s.info ? `<span class="suspect-info">${esc(s.info)}</span><br>` : ''}
           Alibi : ${esc(s.alibi)}
         </div>`;
       });

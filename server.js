@@ -56,9 +56,28 @@ const enigmas = [
   },
   {
     id: 3,
-    type: 'qrcode',
+    type: 'code',
     number: 3,
-    title: 'Étape 3 — Témoin Anonyme',
+    title: 'Étape 3 — Logs d\'Accès Suspects',
+    intro: "La responsable sécurité a extrait les logs des badges pour la journée du pique-nique. Les enregistrements ont été mélangés volontairement. Remettez-les dans l'ordre chronologique et lisez le nombre de passages de chaque zone.",
+    table: {
+      headers: ["Zone", "Heure d'accès", "Passages"],
+      rows: [
+        ["Parking sous-sol", "15:48", "7"],
+        ["Bureau d'Isabelle", "12:07", "2"],
+        ["Cafétéria", "13:15", "3"],
+        ["Vestiaires", "14:32", "5"]
+      ]
+    },
+    question: "Classez les zones de la plus tôt à la plus tardive, puis lisez leurs passages dans cet ordre. Quel code à 4 chiffres obtenez-vous ?",
+    answer: "2357",
+    hint: "Triez par heure croissante : 12h07 → 13h15 → 14h32 → 15h48. Notez les passages dans cet ordre."
+  },
+  {
+    id: 4,
+    type: 'qrcode',
+    number: 4,
+    title: 'Étape 4 — Témoin Anonyme',
     intro: "Un témoin a laissé un message secret dans le parc. Trouvez l'Arbre A (marqué d'un ruban ROUGE) et scannez le QR code qui s'y trouve.",
     qrLabel: "Arbre A — ruban ROUGE",
     question: "En quelle année les injustices ont-elles commencé ? (4 chiffres)",
@@ -66,39 +85,49 @@ const enigmas = [
     hint: "Le témoin mentionne une date précise dans son témoignage. L'année est clairement indiquée."
   },
   {
-    id: 4,
+    id: 5,
     type: 'qcm',
-    number: 4,
-    title: 'Étape 4 — Identification du Coupable',
-    intro: "Croisez toutes vos informations : badge #2847, anomalie financière, date 2022... Le profil du coupable se dessine.",
+    number: 5,
+    title: 'Étape 5 — Portrait du Coupable',
+    intro: "Un informateur anonyme a glissé un message sous la porte de l'Inspecteur Moreau :\n\n« Le voleur travaille avec les chiffres chaque jour. Il était déjà là quand les injustices ont commencé. Le jour du crime, sa seule défense… c'est sa propre parole. »\n\nCroisez ce message avec tous les indices récoltés depuis le début.",
     suspects: [
-      { name: "Marc Leroux", role: "Directeur IT, 45 ans", badge: "#1145", alibi: "En réunion téléphonique de 14h à 15h — confirmé par 4 collègues" },
-      { name: "Sophie Blanc", role: "DRH, 38 ans", badge: "#3312", alibi: "Préparait les salades — vue par 3 personnes" },
-      { name: "Kevin Dumas", role: "Stagiaire, 22 ans", badge: "#8821", alibi: "Dormait sous un arbre — non vérifié" },
-      { name: "Isabelle Renard", role: "Comptable, 41 ans", badge: "#2847", alibi: "« Je lisais mon livre » — aucun témoin" },
-      { name: "Bruno Castets", role: "Commercial, 35 ans", badge: "#9901", alibi: "Jouait au frisbee — confirmé par 5 personnes" }
+      { name: "Marc Leroux", role: "Directeur IT — dans l'entreprise depuis 2015", info: "Spécialité : réseaux, sécurité informatique, serveurs", alibi: "Confirmé par 4 collègues en réunion téléphonique de 14h à 15h" },
+      { name: "Sophie Blanc", role: "DRH — dans l'entreprise depuis 2018", info: "Spécialité : gestion du personnel, contrats, recrutement", alibi: "Confirmée par 3 témoins — préparait les salades au moment du vol" },
+      { name: "Kevin Dumas", role: "Stagiaire — arrivé en janvier 2024", info: "Spécialité : communication digitale, réseaux sociaux", alibi: "Non vérifié — dormait seul sous un arbre selon ses dires" },
+      { name: "Isabelle Renard", role: "Comptable — dans l'entreprise depuis 2019", info: "Spécialité : gestion financière, notes de frais, bilans", alibi: "Non vérifié — « je lisais mon livre », aucun témoin présent" },
+      { name: "Bruno Castets", role: "Commercial — arrivé en mars 2023", info: "Spécialité : développement commercial, prospection clients", alibi: "Confirmé par 5 personnes lors d'une partie de frisbee" }
     ],
-    question: "Qui a volé la clé USB du Projet Soleil ?",
+    question: "En croisant le message de l'informateur avec vos indices, qui est le coupable ?",
     options: ["Marc Leroux", "Sophie Blanc", "Kevin Dumas", "Isabelle Renard", "Bruno Castets"],
     answer: 3,
-    hint: "Un seul suspect possède le badge #2847 et n'a aucun alibi confirmé par un témoin."
+    hint: "Trois critères à croiser : qui travaille avec des chiffres ? Qui était présent en 2022 ? Qui n'a aucun témoin pour son alibi ?"
   },
   {
-    id: 5,
+    id: 6,
+    type: 'code',
+    number: 6,
+    title: 'Étape 6 — Calcul du Préjudice',
+    intro: "La brigade financière a finalisé son rapport. La fraude a démarré en janvier 2025 et s'est poursuivie sans interruption jusqu'en avril 2025 inclus. Vous avez déjà établi la différence mensuelle constante entre les montants déclarés et réels à l'étape 2.",
+    question: "Quel est le montant total en euros détourné sur cette période ? (chiffres uniquement, sans €)",
+    answer: "1600",
+    hint: "La différence mensuelle est de 400 €. Comptez les mois de janvier à avril inclus : 4 mois. Multipliez."
+  },
+  {
+    id: 7,
     type: 'qrcode',
-    number: 5,
-    title: 'Étape 5 — Enregistrement Audio',
+    number: 7,
+    title: 'Étape 7 — Enregistrement Audio',
     intro: "Une retranscription audio a été cachée dans le parc. Trouvez l'Arbre B (marqué d'un ruban BLEU) et scannez le QR code.",
     qrLabel: "Arbre B — ruban BLEU",
     question: "Quel est le code complet de la boîte métallique ? (4 chiffres)",
     answer: "4722",
-    hint: "Le code commence par 47. Les 2 derniers chiffres sont les 2 derniers chiffres de l'année découverte à l'étape 3."
+    hint: "Le code commence par 47. Les 2 derniers chiffres sont les 2 derniers chiffres de l'année découverte à l'étape 4."
   },
   {
-    id: 6,
+    id: 8,
     type: 'final',
-    number: 6,
-    title: 'Étape 6 — Clôture de l\'Enquête',
+    number: 8,
+    title: 'Étape 8 — Clôture de l\'Enquête',
     intro: "Vous avez tous les éléments. Il est temps de boucler l'affaire et de rendre vos conclusions !",
     questions: [
       {

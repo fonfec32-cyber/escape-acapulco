@@ -65,15 +65,17 @@ Aller sur https://www.qr-code-generator.com et créer 3 QR codes :
 **Mobile** : Primes impayées depuis juin 2022
 **Cachette** : Au pied de l'Arbre B, 7 pas vers le nord
 
-### Réponses aux 6 étapes
+### Réponses aux 8 étapes
 | Étape | Type | Réponse |
 |-------|------|---------|
 | 1 | QCM | C — #2847 |
 | 2 | Code | 1180 |
-| 3 | QR Arbre A | 2022 |
-| 4 | QCM | Isabelle Renard |
-| 5 | QR Arbre B | 4722 |
-| 6 | QCM final | Isabelle Renard + Primes impayées + Au pied de l'Arbre B |
+| 3 | Code — Logs d'accès | 2357 |
+| 4 | QR Arbre A (ruban rouge) | 2022 |
+| 5 | QCM — Portrait du coupable | Isabelle Renard |
+| 6 | Code — Calcul du préjudice | 1600 |
+| 7 | QR Arbre B (ruban bleu) | 4722 |
+| 8 | QCM final | Isabelle Renard + Primes impayées + Au pied de l'Arbre B |
 
 ---
 
