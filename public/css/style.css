@@ -190,6 +190,42 @@ input:focus, textarea:focus { border-color: var(--yellow); }
   flex-shrink: 0;
 }
 
+.nav-buttons { display: flex; gap: 6px; }
+
+.btn-nav {
+  background: var(--border);
+  color: var(--yellow);
+  border: 1px solid var(--yellow);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-nav:hover { background: var(--yellow); color: var(--bg); }
+
+.review-banner {
+  background: #2a1a00;
+  border: 1px solid var(--yellow);
+  color: var(--yellow);
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 0.88rem;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+.review-banner button {
+  display: block;
+  margin: 8px auto 0;
+  background: var(--yellow);
+  color: var(--bg);
+  border: none;
+  border-radius: 6px;
+  padding: 6px 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 .team-badge {
   font-weight: 700;
   font-size: 0.88rem;
@@ -394,6 +430,60 @@ input:focus, textarea:focus { border-color: var(--yellow); }
 }
 .won-details p { margin-bottom: 8px; line-height: 1.6; font-size: 0.95rem; }
 .won-details p:last-child { margin-bottom: 0; }
+
+/* ── Cadenas virtuel ─────────────────────────────────────────── */
+.padlock-body {
+  font-size: 3.5rem;
+  text-align: center;
+  margin: 16px 0 4px;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.padlock-wheels {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 16px 0 20px;
+}
+
+.padlock-wheel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.padlock-btn {
+  background: var(--border);
+  border: none;
+  color: var(--text);
+  font-size: 1.1rem;
+  width: 52px;
+  height: 38px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+.padlock-btn:active { background: var(--yellow); color: #000; transform: scale(0.93); }
+
+.padlock-digit {
+  font-size: 2.2rem;
+  font-weight: 900;
+  font-family: var(--mono);
+  width: 52px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a14;
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  color: var(--yellow);
+  transition: border-color 0.2s;
+}
+.padlock-digit.changed { border-color: var(--yellow); }
 
 /* ── Pages indices (QR) ──────────────────────────────────────── */
 .clue-body {

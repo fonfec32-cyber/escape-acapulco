@@ -86,8 +86,8 @@ const enigmas = [
     id: 4,
     type: 'qcm',
     number: 4,
-    title: "Étape 4 — Les SMS d'Isabelle",
-    intro: "L'unité technique a réussi à extraire les derniers SMS du téléphone d'Isabelle Renard avant qu'elle ne l'efface. Un échange avec un contact mystérieux retient l'attention de l'Inspecteur Moreau.",
+    title: "Étape 4 — SMS Compromettants",
+    intro: "L'unité technique a réussi à extraire les derniers SMS d'un téléphone saisi lors de la perquisition. Un échange avec un contact mystérieux retient l'attention de l'Inspecteur Moreau.",
     document: [
       "SMS RÉCUPÉRÉS — Isabelle Renard — 14/07/2025",
       "────────────────────────────────────",
@@ -152,9 +152,9 @@ const enigmas = [
     type: 'code',
     number: 7,
     title: "Étape 7 — Le Planning de la Journée",
-    intro: "L'organisateur du pique-nique a remis à la brigade le planning officiel de la journée. En croisant avec les témoignages, identifiez les créneaux où Isabelle Renard était absente des activités collectives.",
+    intro: "L'organisateur du pique-nique a remis à la brigade le planning officiel de la journée. En croisant avec les témoignages et les logs de badges, identifiez les créneaux où la suspecte principale était absente des activités collectives.",
     table: {
-      headers: ["Activité", "Début", "Fin", "Présence d'Isabelle"],
+      headers: ["Activité", "Début", "Fin", "Présence suspecte"],
       rows: [
         ["Accueil & café", "12h00", "12h30", "✓ Présente"],
         ["Discours de la direction", "12h30", "13h00", "✓ Présente"],
@@ -187,7 +187,7 @@ const enigmas = [
     type: 'code',
     number: 9,
     title: "Étape 9 — Le Message Codé",
-    intro: "Un post-it froissé a été retrouvé au fond du tiroir d'Isabelle. La technicienne en cryptologie identifie un chiffrement de César classique : chaque lettre a été décalée de 3 positions vers l'avant dans l'alphabet (A→D, B→E, …, Z→C). Les chiffres, eux, n'ont pas été modifiés.",
+    intro: "Un post-it froissé a été retrouvé au fond d'un tiroir lors de la perquisition. La technicienne en cryptologie identifie un chiffrement de César classique : chaque lettre a été décalée de 3 positions vers l'avant dans l'alphabet (A→D, B→E, …, Z→C). Les chiffres, eux, n'ont pas été modifiés.",
     document: [
       "POST-IT RETROUVÉ DANS LE TIROIR D'ISABELLE :",
       "────────────────────────────────────",
@@ -238,7 +238,7 @@ const enigmas = [
     type: 'code',
     number: 11,
     title: "Étape 11 — Relevé des Appels",
-    intro: "L'opérateur téléphonique a fourni à la brigade le relevé des appels passés par Isabelle Renard durant la semaine précédant le vol. Un pattern suspect se dégage.",
+    intro: "L'opérateur téléphonique a fourni à la brigade le relevé des appels passés par la suspecte principale durant la semaine précédant le vol. Un pattern suspect se dégage.",
     table: {
       headers: ["Date", "Heure", "Durée (min)", "Correspondant"],
       rows: [
@@ -287,7 +287,7 @@ const enigmas = [
       "ROUE 1 : 1er chiffre de la référence email (ACAP-????)",
       "ROUE 2 : 1er chiffre du code des logs classés chronologiquement",
       "ROUE 3 : nombre de témoins ayant vu quelqu'un sortir des vestiaires",
-      "ROUE 4 : dernier chiffre du numéro de badge utilisé (#2847)",
+      "ROUE 4 : dernier chiffre du numéro de badge ayant servi à accéder aux vestiaires",
       "────────────────────────────────────"
     ],
     question: "Ouvrez le cadenas en formant le bon code à 4 chiffres.",

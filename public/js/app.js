@@ -3,13 +3,45 @@ let myTeamId = null;
 let myTeamColor = '#f5c518';
 let selectedTeamId = null;
 let currentEnigma = null;
-let totalEnigmas = 8;
+let totalEnigmas = 23;
+let padlockDigits = [0, 0, 0, 0];
+
+let enigmaHistory = [];
+let viewingIndex = -1;
 
 // ── Écrans ────────────────────────────────────────────────────────────────────
 
 function showScreen(id) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// ── Navigation historique ─────────────────────────────────────────────────────
+
+function goBack() {
+  if (viewingIndex > 0) { viewingIndex--; renderEnigmaAt(viewingIndex); }
+}
+
+function goForward() {
+  if (viewingIndex < enigmaHistory.length - 1) { viewingIndex++; renderEnigmaAt(viewingIndex); }
+}
+
+function goToCurrent() {
+  viewingIndex = enigmaHistory.length - 1;
+  renderEnigmaAt(viewingIndex);
+}
+
+function renderEnigmaAt(idx) {
+  const enigma = enigmaHistory[idx];
+  const isCurrent = idx === enigmaHistory.length - 1;
+  currentEnigma = enigmaHistory[enigmaHistory.length - 1];
+
+  document.getElementById('header-progress').textContent = `Étape ${enigma.number}/${totalEnigmas}`;
+  document.getElementById('btn-nav-prev').style.visibility = idx > 0 ? 'visible' : 'hidden';
+  document.getElementById('btn-nav-next').style.visibility = idx < enigmaHistory.length - 1 ? 'visible' : 'hidden';
+
+  renderEnigma(enigma, isCurrent);
   window.scrollTo(0, 0);
 }
 
@@ -79,19 +111,36 @@ socket.on('joined', ({ teamId, teamName, color, totalEnigmas: te }) => {
 });
 
 socket.on('enigma', (enigma) => {
+  enigmaHistory.push(enigma);
+  viewingIndex = enigmaHistory.length - 1;
   currentEnigma = enigma;
-  renderEnigma(enigma);
+  renderEnigmaAt(viewingIndex);
   showScreen('screen-enigma');
 });
 
 socket.on('answer-result', ({ correct }) => {
   if (correct) {
-    showScreen('screen-correct');
+    if (currentEnigma && currentEnigma.type === 'padlock') {
+      const icon = document.getElementById('padlock-icon');
+      if (icon) {
+        icon.textContent = '🔓';
+        icon.style.color = 'var(--green)';
+        icon.style.transform = 'scale(1.3)';
+      }
+      setTimeout(() => showScreen('screen-correct'), 900);
+    } else {
+      showScreen('screen-correct');
+    }
   } else {
     const btn = document.querySelector('#enigma-content .btn-submit');
     if (btn) { btn.classList.add('shake'); setTimeout(() => btn.classList.remove('shake'), 400); }
     const err = document.getElementById('error-msg');
     if (err) { err.textContent = '❌ Mauvaise réponse, réessayez !'; err.style.display = 'block'; }
+    // If user was reviewing, bring them back to current enigma after wrong answer
+    if (viewingIndex !== enigmaHistory.length - 1) {
+      viewingIndex = enigmaHistory.length - 1;
+      renderEnigmaAt(viewingIndex);
+    }
   }
 });
 
@@ -110,6 +159,8 @@ socket.on('hint-received', ({ message }) => {
 socket.on('game-reset', () => {
   myTeamId = null;
   selectedTeamId = null;
+  enigmaHistory = [];
+  viewingIndex = -1;
   showScreen('screen-join');
 });
 
@@ -127,15 +178,30 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
-function renderEnigma(enigma) {
-  document.getElementById('header-progress').textContent = `Étape ${enigma.number}/${totalEnigmas}`;
+function renderDocument(doc) {
+  return '<div class="document">' + doc.map(l => `<div>${esc(l)}</div>`).join('') + '</div>';
+}
+
+function renderTable(table) {
+  let h = '<div class="table-wrap"><table class="clue-table">';
+  h += '<tr>' + table.headers.map(c => `<th>${esc(c)}</th>`).join('') + '</tr>';
+  table.rows.forEach(row => { h += '<tr>' + row.map(c => `<td>${esc(c)}</td>`).join('') + '</tr>'; });
+  h += '</table></div>';
+  return h;
+}
+
+function renderEnigma(enigma, isActive = true) {
   const content = document.getElementById('enigma-content');
-  let html = `<h2>${esc(enigma.title)}</h2><p class="intro">${esc(enigma.intro)}</p>`;
+  let html = '';
+
+  if (!isActive) {
+    html += `<div class="review-banner">📂 Consultation — Étape ${enigma.number}<button onclick="goToCurrent()">▶ Revenir à mon enquête</button></div>`;
+  }
+
+  html += `<h2>${esc(enigma.title)}</h2><p class="intro">${esc(enigma.intro)}</p>`;
 
   if (enigma.type === 'qcm') {
-    if (enigma.document) {
-      html += '<div class="document">' + enigma.document.map(l => `<div>${esc(l)}</div>`).join('') + '</div>';
-    }
+    if (enigma.document) html += renderDocument(enigma.document);
     if (enigma.suspects) {
       html += '<div class="suspects">';
       enigma.suspects.forEach(s => {
@@ -147,31 +213,26 @@ function renderEnigma(enigma) {
       });
       html += '</div>';
     }
-    html += `<p class="question">${esc(enigma.question)}</p>`;
-    html += '<div class="options">';
-    enigma.options.forEach((opt, i) => {
-      html += `<label class="option-label">
-        <input type="radio" name="qcm" value="${i}">
-        <span>${esc(opt)}</span>
-      </label>`;
-    });
-    html += '</div>';
-    html += '<div id="error-msg" class="error-msg" style="display:none"></div>';
-    html += '<button class="btn btn-submit" onclick="submitQCM()">Valider ma réponse</button>';
+    if (isActive) {
+      html += `<p class="question">${esc(enigma.question)}</p>`;
+      html += '<div class="options">';
+      enigma.options.forEach((opt, i) => {
+        html += `<label class="option-label"><input type="radio" name="qcm" value="${i}"><span>${esc(opt)}</span></label>`;
+      });
+      html += '</div>';
+      html += '<div id="error-msg" class="error-msg" style="display:none"></div>';
+      html += '<button class="btn btn-submit" onclick="submitQCM()">Valider ma réponse</button>';
+    }
 
   } else if (enigma.type === 'code') {
-    if (enigma.table) {
-      html += '<div class="table-wrap"><table class="clue-table">';
-      html += '<tr>' + enigma.table.headers.map(h => `<th>${esc(h)}</th>`).join('') + '</tr>';
-      enigma.table.rows.forEach(row => {
-        html += '<tr>' + row.map(c => `<td>${esc(c)}</td>`).join('') + '</tr>';
-      });
-      html += '</table></div>';
+    if (enigma.document) html += renderDocument(enigma.document);
+    if (enigma.table) html += renderTable(enigma.table);
+    if (isActive) {
+      html += `<p class="question">${esc(enigma.question)}</p>`;
+      html += '<input type="number" id="code-input" class="code-input" placeholder="_ _ _ _" inputmode="numeric">';
+      html += '<div id="error-msg" class="error-msg" style="display:none"></div>';
+      html += '<button class="btn btn-submit" onclick="submitCode()">Valider le code</button>';
     }
-    html += `<p class="question">${esc(enigma.question)}</p>`;
-    html += '<input type="number" id="code-input" class="code-input" placeholder="_ _ _ _" inputmode="numeric">';
-    html += '<div id="error-msg" class="error-msg" style="display:none"></div>';
-    html += '<button class="btn btn-submit" onclick="submitCode()">Valider le code</button>';
 
   } else if (enigma.type === 'qrcode') {
     html += `<div class="qr-instruction">
@@ -179,28 +240,50 @@ function renderEnigma(enigma) {
       <p><strong>${esc(enigma.qrLabel)}</strong></p>
       <p>Partez trouver le QR code dans le parc, scannez-le pour obtenir votre indice, puis revenez ici !</p>
     </div>`;
-    html += `<p class="question">${esc(enigma.question)}</p>`;
-    html += '<input type="number" id="code-input" class="code-input" placeholder="_ _ _ _" inputmode="numeric">';
-    html += '<div id="error-msg" class="error-msg" style="display:none"></div>';
-    html += '<button class="btn btn-submit" onclick="submitCode()">Valider le code</button>';
+    if (isActive) {
+      html += `<p class="question">${esc(enigma.question)}</p>`;
+      html += '<input type="number" id="code-input" class="code-input" placeholder="_ _ _ _" inputmode="numeric">';
+      html += '<div id="error-msg" class="error-msg" style="display:none"></div>';
+      html += '<button class="btn btn-submit" onclick="submitCode()">Valider le code</button>';
+    }
+
+  } else if (enigma.type === 'padlock') {
+    padlockDigits = [0, 0, 0, 0];
+    if (enigma.document) html += renderDocument(enigma.document);
+    if (isActive) {
+      html += `<p class="question">${esc(enigma.question)}</p>`;
+      html += '<div class="padlock-body" id="padlock-icon">🔒</div>';
+      html += '<div class="padlock-wheels">';
+      for (let i = 0; i < 4; i++) {
+        html += `<div class="padlock-wheel">
+          <button class="padlock-btn" onclick="padlockUp(${i})">▲</button>
+          <div class="padlock-digit" id="pd-${i}">0</div>
+          <button class="padlock-btn" onclick="padlockDown(${i})">▼</button>
+        </div>`;
+      }
+      html += '</div>';
+      html += '<div id="error-msg" class="error-msg" style="display:none"></div>';
+      html += '<button class="btn btn-submit" onclick="submitPadlock()">🔓 Déverrouiller</button>';
+    }
 
   } else if (enigma.type === 'final') {
     html += '<div class="final-questions">';
     enigma.questions.forEach((q, qi) => {
-      html += `<div class="final-question">
-        <p class="question">${esc(q.question)}</p>
-        <div class="options">`;
+      html += `<div class="final-question"><p class="question">${esc(q.question)}</p><div class="options">`;
       q.options.forEach((opt, oi) => {
-        html += `<label class="option-label">
-          <input type="radio" name="final-${qi}" value="${oi}">
-          <span>${esc(opt)}</span>
-        </label>`;
+        html += `<label class="option-label"><input type="radio" name="final-${qi}" value="${oi}"><span>${esc(opt)}</span></label>`;
       });
       html += `</div></div>`;
     });
     html += '</div>';
-    html += '<div id="error-msg" class="error-msg" style="display:none"></div>';
-    html += '<button class="btn btn-submit btn-final" onclick="submitFinal()">🔒 Clôturer l\'enquête</button>';
+    if (isActive) {
+      html += '<div id="error-msg" class="error-msg" style="display:none"></div>';
+      html += '<button class="btn btn-submit btn-final" onclick="submitFinal()">🔒 Clôturer l\'enquête</button>';
+    }
+  }
+
+  if (!isActive) {
+    html += `<div class="review-banner" style="margin-top:16px"><button onclick="goToCurrent()">▶ Revenir à mon enquête</button></div>`;
   }
 
   content.innerHTML = html;
@@ -240,4 +323,23 @@ function showError(msg) {
 function hideError() {
   const el = document.getElementById('error-msg');
   if (el) el.style.display = 'none';
+}
+
+function padlockUp(i) {
+  padlockDigits[i] = (padlockDigits[i] + 1) % 10;
+  const el = document.getElementById(`pd-${i}`);
+  if (el) { el.textContent = padlockDigits[i]; el.classList.add('changed'); }
+  hideError();
+}
+
+function padlockDown(i) {
+  padlockDigits[i] = (padlockDigits[i] + 9) % 10;
+  const el = document.getElementById(`pd-${i}`);
+  if (el) { el.textContent = padlockDigits[i]; el.classList.add('changed'); }
+  hideError();
+}
+
+function submitPadlock() {
+  const code = padlockDigits.join('');
+  socket.emit('submit-answer', { teamId: myTeamId, enigmaId: currentEnigma.id, answer: code });
 }

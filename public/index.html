@@ -35,7 +35,11 @@
   <div id="screen-enigma" class="screen enigma-screen">
     <header class="game-header">
       <div class="team-badge" id="header-team"></div>
-      <div class="progress-text" id="header-progress">Étape 1/6</div>
+      <div class="progress-text" id="header-progress">Étape 1/23</div>
+      <div class="nav-buttons">
+        <button id="btn-nav-prev" class="btn-nav" onclick="goBack()" style="visibility:hidden">◀</button>
+        <button id="btn-nav-next" class="btn-nav" onclick="goForward()" style="visibility:hidden">▶</button>
+      </div>
     </header>
     <div class="enigma-content" id="enigma-content"></div>
   </div>

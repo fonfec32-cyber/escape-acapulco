@@ -40,15 +40,17 @@ Dans Railway → Variables → Ajouter :
 - [ ] Tester le jeu sur ton téléphone
 
 ### Dans le parc
-- [ ] **Arbre A** : Attacher un ruban ROUGE + coller le QR code → `/clue/arbre-a`
-- [ ] **Arbre B** : Attacher un ruban BLEU + coller le QR code → `/clue/arbre-b`
+- [ ] **Arbre A** : Attacher un ruban ROUGE + coller le QR code → `/clue/arbre-a` (utilisé à l'étape 8)
+- [ ] **Arbre B** : Attacher un ruban BLEU + coller le QR code → `/clue/arbre-b` (utilisé à l'étape 18)
+- [ ] **Arbre C** : Attacher un ruban VERT + coller le QR code → `/clue/arbre-c` (utilisé à l'étape 15)
 - [ ] À 7 pas vers le nord depuis l'Arbre B : enterrer/cacher l'enveloppe récompense
 
 ### Générer les QR codes
-Aller sur https://www.qr-code-generator.com et créer 3 QR codes :
+Aller sur https://www.qr-code-generator.com et créer 4 QR codes :
 1. `https://TON-URL.railway.app` → QR code d'entrée (à partager avec les joueurs)
 2. `https://TON-URL.railway.app/clue/arbre-a` → QR code Arbre A (ruban rouge)
 3. `https://TON-URL.railway.app/clue/arbre-b` → QR code Arbre B (ruban bleu)
+4. `https://TON-URL.railway.app/clue/arbre-c` → QR code Arbre C (ruban vert)
 
 ### Pendant le jeu
 - Ouvrir `https://TON-URL.railway.app/admin` sur son téléphone
@@ -65,17 +67,32 @@ Aller sur https://www.qr-code-generator.com et créer 3 QR codes :
 **Mobile** : Primes impayées depuis juin 2022
 **Cachette** : Au pied de l'Arbre B, 7 pas vers le nord
 
-### Réponses aux 8 étapes
+### Réponses aux 23 étapes
 | Étape | Type | Réponse |
 |-------|------|---------|
-| 1 | QCM | C — #2847 |
-| 2 | Code | 1180 |
-| 3 | Code — Logs d'accès | 2357 |
-| 4 | QR Arbre A (ruban rouge) | 2022 |
-| 5 | QCM — Portrait du coupable | Isabelle Renard |
-| 6 | Code — Calcul du préjudice | 1600 |
-| 7 | QR Arbre B (ruban bleu) | 4722 |
-| 8 | QCM final | Isabelle Renard + Primes impayées + Au pied de l'Arbre B |
+| 1 | QCM — Rapport préliminaire | C — #2847 |
+| 2 | Code — Notes de frais | 1180 |
+| 3 | Code — Email intercepté | 7743 |
+| 4 | QCM — SMS d'Isabelle | 20h00 |
+| 5 | Code — Logs d'accès | 2357 |
+| 6 | Code — Agenda codé | 3521 |
+| 7 | Code — Planning de la journée | 45 |
+| 8 | **QR Arbre A** (ruban rouge) | 2022 |
+| 9 | Code — Message chiffré César | 47 |
+| 10 | QCM — Alibis contradictoires | Béatrice Moulin |
+| 11 | Code — Relevé des appels | 57 |
+| 12 | QCM — Portrait du coupable | Isabelle Renard |
+| 13 | Cadenas — Mallette secrète | 7237 |
+| 14 | Code — Calcul du préjudice | 1600 |
+| 15 | **QR Arbre C** (ruban vert) | 3847 |
+| 16 | Code — Reçu bancaire | 1460 |
+| 17 | QCM — Caméra de surveillance | Image C |
+| 18 | **QR Arbre B** (ruban bleu) | 4722 |
+| 19 | Code — Ticket de caisse | 1668 |
+| 20 | Code — Numéro de casier | 1622 |
+| 21 | Cadenas — Mallette du complice | 1437 |
+| 22 | Code — Rapport de clôture | 2021 |
+| 23 | QCM final | Isabelle Renard + Primes impayées + Au pied de l'Arbre B |
 
 ---
 
